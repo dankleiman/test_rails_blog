@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Articles.order('created_at DESC')
+    @articles = Article.order('created_at DESC')
   end
 
   def new
@@ -10,7 +10,6 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    binding.pry
     if @article.save
       params[:article][:category_ids].each do |category_id|
         category = Category.find(category_id) unless category_id == ""
@@ -27,6 +26,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    @comment = Comment.new
   end
 
   private
