@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to "/articles/#{@article.id}"
     else
-      flash.now[:notice] "Could not post your comment."
+      flash.now[:notice] = "Could not post your comment."
       render :new
     end
   end
