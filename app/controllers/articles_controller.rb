@@ -5,14 +5,15 @@ class ArticlesController < ApplicationController
 
   def new
     @categories = Category.all
+    @article = Article.new
   end
 
   def create
     @article = Article.new(article_params)
-
+    binding.pry
     if @article.save
-      params[:category].each do |category_id|
-        category = Category.find(category_id)
+      params[:article][:category_ids].each do |category_id|
+        category = Category.find(category_id) unless category_id == ""
         Categorization.create(article: @article,
           category: category)
       end
@@ -33,5 +34,6 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :author, :body)
   end
+
 end
 
